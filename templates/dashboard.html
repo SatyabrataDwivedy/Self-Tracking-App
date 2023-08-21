@@ -1,0 +1,67 @@
+{% extends 'dashboardbase.html' %}
+{% block content %}
+<h2 style="color:#05488c ;">Welcome , {{name}}</h2>
+                <div class="main__cards">
+                    <div class="card">
+                        <div class="card_inner">
+                          <p class="text-primary-p" style="font-size: 18px ;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-clipboard-data" viewBox="0 1 16 16">
+                              <path d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0V9z"/>
+                              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                              <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                            </svg>
+                             Number of Trackers</p>
+                            <span class="font-bold text-title">{{totalTrack}}</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card_inner">
+                            <p class="text-primary-p" style="font-size: 18px ;">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                              </svg>
+                               Last Updated</p>
+                            <span class="font-bold text-title">{{lg}}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div align="center">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                  <div class="alert alert-success alert-dismissible fade show" role="alert" role="alert" style="width: 50%;">
+                    {{ messages[0] }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endif %}
+                {% endwith %}
+                </div>
+
+                <div class="chart">
+
+                    <div class="charts__right">
+                        <div class="charts__right__title">
+                            <div>
+                                <h1>Your Trackers</h1>
+                            </div>
+                        </div>
+                        <div class="charts__right__cards">
+                        {%for tracker in trackers%}
+                        <div class="card text-center card2" style="height: 200px;" >
+                          <div class="card-body">
+                            <a href="/TrackerInfo/{{tracker['tracker_id']}}" id="cardlink">
+                            <h5 class="card-title" style="font-size:30px;">{{tracker["tracker_name"]}}</h5>
+                            </a>
+                            <p class="card-text" style="font-size:15px">{{tracker["description"]}}</p>
+                            <a href="/editTracker/{{tracker['tracker_id']}}" class="btn btn-primary shadow" style="width: 90px;">Edit</a>
+                            <a href="/deleteTracker/{{tracker['tracker_id']}}" class="btn btn-primary shadow" style="width:90px">Delete</a>
+                          </div>
+                        </div>
+                        {%endfor%}
+                        </div>
+                    </div>
+                </div>
+{%endblock%}

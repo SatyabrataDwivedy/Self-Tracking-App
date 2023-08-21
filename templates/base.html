@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indexpage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(30deg, #6de4eb, #d7e9e9);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .sidenav {
+          height: 100%;
+          width: 220px;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          background-color: #0cc1c1;
+          overflow-x: hidden;
+          padding-top: 20px;
+        }
+        
+        .sidenav a {
+          padding: 6px 8px 6px 16px;
+          text-decoration: none;
+          font-size: 25px;
+          color: #05488c;
+          display: block;
+        }
+        
+        .sidenav a:hover {
+          color: #f1f1f1;
+        }
+        
+        .main {
+          margin-left: 220px; /* Same as the width of the sidenav */
+          font-size: 28px; /* Increased text to enable scrolling */
+          padding: 0px 10px;
+        }
+        
+        @media screen and (max-height: 450px) {
+          .sidenav {padding-top: 15px;}
+          .sidenav a {font-size: 18px;}
+        }
+        </style>
+        </head>
+        <body>
+</head>
+
+<body>
+        <div class="sidenav">
+          <div align="center">
+            <img src="static/logo.png" style="width:150px;height:80px;">
+          </div>
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('main.profile') }}">Profile</a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('main.profile') }}">Home</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+          <a href="{{ url_for('auth.login') }}">Login</a>
+          <a href="{{ url_for('auth.signup') }}">Signup</a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('auth.logout') }}">Logout</a>
+        {% endif %}
+        </div>
+
+        <div class="main">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

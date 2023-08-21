@@ -1,0 +1,51 @@
+{% extends 'dashboardbase.html' %}
+{% block content %}
+<div class="container">
+  <div class="mx-auto text-center" style="padding-bottom: 30px;">
+    <h2>Edit Log</h2>
+    <h4 id="headline">For <strong>{{cur_tracker['tracker_name']}}</strong> Tracker</h4>
+  </div>
+  <div align="center">
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="mx-auto alert alert-success alert-dismissible fade show" role="alert" style="width: 45%;">
+      {{ messages[0] }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endif %}
+  {% endwith %}
+  </div>
+  
+  <div class="mx-auto text-center" style="width:40% ;height:20% ;">
+    <form method="POST" id="add-form">
+        <div align="center">
+            <input type="datetime-local" class="form-control" id="date" name="date" value="{{etime}}" required />
+        </div>
+
+
+        {% if cur_tracker['tracker_type']=='Multiple Choice'%}
+        <div class="form-outline mb-4" style="padding-top: 25px;">
+          <select class="form-control" id="val" name="val" required>
+            <option selected>{{eval}}</option>
+            {% for i in option_list %}
+            <option>{{i}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {%else%}
+        <div class="form-outline mb-4" style="padding-top: 25px;">
+            <input type="text" class="form-control" id="val" name="val" value="{{eval}}" placeholder="Enter Value"/>
+          </div>
+        {% endif %}
+
+        <div class="form-outline mb-4">
+          <input type="text" id="notes" name="notes" class="form-control" placeholder="Note" value="{{enote}}"required/>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mx-auto" style="width:120px ;">Edit Log</button>
+      </form>
+    </div>
+</div>
+
+{% endblock%}

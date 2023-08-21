@@ -1,0 +1,61 @@
+{% extends 'dashboardbase.html' %}
+{% block content %}
+<div class="container">
+  <div class="mx-auto text-center" style="padding-bottom: 30px;">
+    <h2>Edit {{tracker['tracker_name']}} Tracker</h2>
+  </div>
+  <div align="center">
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="mx-auto alert alert-danger alert-dismissible fade show" role="alert" style="width: 45%;">
+      {{ messages[0] }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endif %}
+  {% endwith %}
+  </div>
+  <div class="mx-auto text-center" style="width:40% ;height:20% ;">
+    <form method="POST" id="add-form">
+        <div class="form-outline mb-4">
+          <input type="text" id="trackername" name="tname" class="form-control" placeholder="Tracker Name" value="{{tracker['tracker_name']}}" required/>
+        </div>
+        <div class="form-outline mb-4">
+          <select class="form-control" id="choices" name="choices" onchange="entextbox(this)" required>
+            <option value="" disabled selected hidden>Type</option>
+            <option>Integer</option>
+            <option>Multiple Choice</option>
+            <option>Celsius/Farenheit</option>
+          </select>
+        </div>
+      
+        <div class="form-outline mb-4">
+          <textarea class="form-control" id="description" name="desc" rows="4" placeholder="Description">{{tracker['description']}}</textarea>
+        </div>
+        <div class="form-outline mb-4">
+          <input type="text" id="sets" name="sets" class="form-control" value="{{tracker['options']}}" placeholder="Give comma separated values for option" disabled/>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mx-auto" style="width:120px ;">Edit Tracker</button>
+      </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+  function entextbox(ddmodel)
+  {
+  var selectedValue = ddmodel.options[ddmodel.selectedIndex].value;
+  var txten= document.getElementById("sets");
+  txten.disabled = selectedValue == "Multiple Choice" ? false : true;
+  if(!txten.disabled){
+      txten.focus();
+  }
+  }
+  
+  function selectop(opt)
+  {
+    document.getElementById("choices").value=opt;
+  }
+</script>
+
+{% endblock%}
